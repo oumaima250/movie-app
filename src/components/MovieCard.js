@@ -1,14 +1,16 @@
-import React from 'react';
+// MovieCard.js
+import React from "react";
+import Card from "react-bootstrap/Card";
 
-const MovieCard = ({ movie }) => {
+export default function MovieCard(props) {
   return (
-    <div className="movie-card">
-      <img src={movie.posterURL} alt={movie.title} />
-      <h3>{movie.title}</h3>
-      <p>{movie.description}</p>
-      <p>Rating: {movie.rating}</p>
-    </div>
+    <Card className="movie-card" style={{ width: "18rem" }}>
+      <Card.Img variant="top" src={props.posterURL} alt={props.title} />
+      <Card.Body>
+        <Card.Title>{props.title}</Card.Title>
+        <Card.Subtitle>{props.rating}</Card.Subtitle>
+        <Card.Text>{props.description}</Card.Text>
+      </Card.Body>
+    </Card>
   );
-};
-
-export default MovieCard;
+}

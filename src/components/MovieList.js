@@ -1,14 +1,29 @@
-import React from 'react';
-import MovieCard from './MovieCard';
+// MovieList.js
+import React, { useEffect, useState } from "react";
+import MovieCard from "./MovieCard";
+import { filterMoviesByTitleAndRating } from "./Filter";
 
-const MovieList = ({ movies }) => {
-  return (
-    <div className="movie-list">
-      {movies.map((movie) => (
-        <MovieCard key={movie.title} movie={movie} />
-      ))}
-    </div>
-  );
-};
+export default function MovieList({ titleFilter, ratingFilter }) {
+	const [movies, setMovies] = useState([]);
 
-export default MovieList;
+	useEffect(() => {
+		// Retrieve movies from local storage
+		const storedMovies = JSON.parse(localStorage.getItem("movies")) || [];
+		setMovies(storedMovies);
+	}, []);
+
+	// Filter movies based on title and rating criteria
+	const filteredMovies = filterMoviesByTitleAndRating(
+		movies,
+		titleFilter,
+		ratingFilter
+	);
+
+	return (
+		<div className="movie-list">
+			{filteredMovies.map((movie, index) => (
+				<MovieCard key={index} {...movie} />
+			))}
+		</div>
+	);
+}
